@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "70468278079",
+    "project_id": "li-zifei",
+    "storage_bucket": "li-zifei.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70468278079:android:ba12da1131a691ec55658a",
+        "android_client_info": {
+          "package_name": "com.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70468278079-fm7laifrdvp7vr01k98pnkjc30j6scr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgzvBVpSbPjQMNhplG5qojCjEr8AZx7gA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70468278079-fm7laifrdvp7vr01k98pnkjc30j6scr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
