@@ -48,23 +48,10 @@ class MainActivity : Activity() {
             orientation = LinearLayout.VERTICAL
             setPadding(32, 32, 32, 32)
         }
-
-        root.addView(TextView(this).apply {
-            text = "FCM Payload Test"
-            textSize = 24f
-        })
-
-        root.addView(TextView(this).apply {
-            text = "\nAndroid package: com.test\n\nFCM Token"
-            textSize = 16f
-        })
-
-        tokenText = TextView(this).apply {
-            text = "Loading..."
-            setTextIsSelectable(true)
-        }
+        root.addView(TextView(this).apply { text = "FCM Payload Test"; textSize = 24f })
+        root.addView(TextView(this).apply { text = "\nAndroid package: com.test\n\nFCM Token"; textSize = 16f })
+        tokenText = TextView(this).apply { text = "Loading..."; setTextIsSelectable(true) }
         root.addView(tokenText)
-
         root.addView(Button(this).apply {
             text = "Copy FCM Token"
             setOnClickListener {
@@ -77,48 +64,20 @@ class MainActivity : Activity() {
                 }
             }
         })
-
-        root.addView(Button(this).apply {
-            text = "Refresh Token"
-            setOnClickListener { loadToken() }
-        })
-
-        root.addView(TextView(this).apply {
-            text = "\nLast Push Payload"
-            textSize = 18f
-        })
-
-        payloadText = TextView(this).apply {
-            text = "No push received yet."
-            setTextIsSelectable(true)
-        }
+        root.addView(Button(this).apply { text = "Refresh Token"; setOnClickListener { loadToken() } })
+        root.addView(TextView(this).apply { text = "\nLast Push Payload"; textSize = 18f })
+        payloadText = TextView(this).apply { text = "No push received yet."; setTextIsSelectable(true) }
         root.addView(payloadText)
-
         root.addView(Button(this).apply {
             text = "Clear Payload"
             setOnClickListener {
-                getSharedPreferences("fcm_test", MODE_PRIVATE)
-                    .edit()
-                    .remove("last_payload")
-                    .apply()
+                getSharedPreferences("fcm_test", MODE_PRIVATE).edit().remove("last_payload").apply()
                 payloadText.text = "No push received yet."
             }
         })
-
         root.addView(TextView(this).apply {
-            text = """
-
-                Check these keys:
-                - tdCampaignId
-                - campaignId
-                - campaign_id
-                - td_campaign_id
-
-                Send a Push from Engage Studio to the FCM token shown above.
-                When a message is received, reopen this app if needed.
-            """.trimIndent()
+            text = "\nCheck keys: tdCampaignId / campaignId / campaign_id / td_campaign_id"
         })
-
         val scroll = ScrollView(this)
         scroll.addView(root)
         setContentView(scroll)
@@ -138,28 +97,22 @@ class MainActivity : Activity() {
     }
 
     private fun renderSavedPayload() {
-        val saved = getSharedPreferences("fcm_test", MODE_PRIVATE)
-            .getString("last_payload", null)
+        val saved = getSharedPreferences("fcm_test", MODE_PRIVATE).getString("last_payload", null)
         if (!saved.isNullOrBlank()) payloadText.text = saved
     }
 
     private fun renderIntentExtras(intent: Intent?) {
         val extras = intent?.extras ?: return
         if (extras.keySet().isEmpty()) return
-
-        val lines = extras.keySet().sorted().map { key ->
-            "$key = ${extras.get(key)}"
-        }
+        val lines = extras.keySet().sorted().map { key -> "$key = ${extras.get(key)}" }
         val block = "Launch Intent extras:\n" + lines.joinToString("\n")
         payloadText.text = block
         Log.d("FCM_TEST", block)
     }
 
     private fun requestNotificationPermission() {
-        if (
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1001)
         }
     }
